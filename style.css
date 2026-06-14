@@ -1,103 +1,51 @@
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;600&display=swap');
-
-body {
-    margin: 0;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #061b14;
-    font-family: 'Playfair Display', serif;
-}
-
-/* BOOK */
 .book {
     width: 420px;
     height: 560px;
     position: relative;
-    perspective: 2000px;
+    perspective: 2500px;
 }
 
-/* COVER */
-.cover {
+/* BOOK INNER STACK */
+.pages {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: #0b2b22;
-    color: #d6b36a;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    top: 0;
+    left: 0;
+}
+
+/* EACH PAGE */
+.page {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #f5efe6;
     border-radius: 10px;
-    box-shadow: 0 25px 60px rgba(0,0,0,0.6);
-    z-index: 5;
     transform-origin: left;
-    transition: transform 1.5s ease;
-}
-
-.cover h1 {
-    font-family: 'Great Vibes', cursive;
-    font-size: 42px;
-}
-
-.book.open .cover {
-    transform: rotateY(-160deg);
-}
-
-/* LOCK SCREEN */
-.lock-screen {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: #f5efe6;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: 0.8s;
-    z-index: 4;
-}
-
-.lock-screen.show {
-    opacity: 1;
-    pointer-events: all;
-}
-
-/* SCRAPBOOK */
-.scrapbook {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: #f5efe6;
+    transition: transform 1s ease;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
     padding: 20px;
     box-sizing: border-box;
-    opacity: 0;
-    pointer-events: none;
-    transition: 0.8s;
-    z-index: 3;
+    backface-visibility: hidden;
 }
 
-.scrapbook.active {
-    opacity: 1;
-    pointer-events: all;
+/* FLIPPED STATE */
+.page.flipped {
+    transform: rotateY(-180deg);
 }
 
-/* PAGE CONTENT */
-.page-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
+/* Z layering */
+.page {
+    z-index: 1;
 }
 
-.page-img {
+/* CONTENT */
+.page img {
     width: 100%;
-    height: 280px;
+    height: 65%;
     object-fit: cover;
     border-radius: 10px;
+    margin-bottom: 10px;
 }
 
 /* NAV */
@@ -107,14 +55,5 @@ body {
     width: 90%;
     display: flex;
     justify-content: space-between;
-}
-
-/* BUTTONS */
-button {
-    padding: 10px 18px;
-    border: none;
-    background: #0b2b22;
-    color: #d6b36a;
-    border-radius: 8px;
-    cursor: pointer;
+    z-index: 50;
 }
