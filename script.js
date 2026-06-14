@@ -1,23 +1,42 @@
 let currentPage = 0;
 
-// 15 PAGES
-const pages = [
-    { title: "How we started", text: "Our story began here ❤️", img: "https://source.unsplash.com/600x400/?couple,love" },
-    { title: "First laughs", text: "We couldn't stop smiling.", img: "https://source.unsplash.com/600x400/?laugh" },
-    { title: "Late nights", text: "Talking for hours and hours.", img: "https://source.unsplash.com/600x400/?night,stars" },
-    { title: "Our first memory", text: "Something I'll never forget.", img: "https://source.unsplash.com/600x400/?memory" },
-    { title: "Small moments", text: "They meant everything.", img: "https://source.unsplash.com/600x400/?cozy" },
-    { title: "Road trips", text: "Music + us = perfect.", img: "https://source.unsplash.com/600x400/?roadtrip" },
-    { title: "Comfort days", text: "Just peace with you.", img: "https://source.unsplash.com/600x400/?calm" },
-    { title: "Your smile", text: "My favourite place.", img: "https://source.unsplash.com/600x400/?smile" },
-    { title: "Growing together", text: "We became stronger.", img: "https://source.unsplash.com/600x400/?growth" },
-    { title: "Hard days", text: "But we stayed.", img: "https://source.unsplash.com/600x400/?rain" },
-    { title: "Healing", text: "We learned love better.", img: "https://source.unsplash.com/600x400/?sunlight" },
-    { title: "Deep love", text: "It only got stronger.", img: "https://source.unsplash.com/600x400/?heart" },
-    { title: "Dreams", text: "Everything ahead of us.", img: "https://source.unsplash.com/600x400/?dream" },
-    { title: "Forever", text: "I choose you always.", img: "https://source.unsplash.com/600x400/?romantic" },
-    { title: "Right now", text: "Just us, here.", img: "https://source.unsplash.com/600x400/?together" }
+// 15 REAL PAGES
+const pagesData = [
+    { title:"How we started", text:"Our story began ❤️", img:"https://source.unsplash.com/600x400/?couple,love" },
+    { title:"First laughs", text:"We laughed so much.", img:"https://source.unsplash.com/600x400/?laugh" },
+    { title:"Late nights", text:"Talking for hours.", img:"https://source.unsplash.com/600x400/?night" },
+    { title:"First memory", text:"I still remember this.", img:"https://source.unsplash.com/600x400/?memory" },
+    { title:"Small moments", text:"They mattered most.", img:"https://source.unsplash.com/600x400/?cozy" },
+    { title:"Road trips", text:"Music + us.", img:"https://source.unsplash.com/600x400/?roadtrip" },
+    { title:"Peace", text:"Just us being calm.", img:"https://source.unsplash.com/600x400/?calm" },
+    { title:"Your smile", text:"My favourite thing.", img:"https://source.unsplash.com/600x400/?smile" },
+    { title:"Growth", text:"We got stronger.", img:"https://source.unsplash.com/600x400/?growth" },
+    { title:"Hard days", text:"But we stayed.", img:"https://source.unsplash.com/600x400/?rain" },
+    { title:"Healing", text:"We understood love.", img:"https://source.unsplash.com/600x400/?sunlight" },
+    { title:"Deeper love", text:"It kept growing.", img:"https://source.unsplash.com/600x400/?heart" },
+    { title:"Dreams", text:"Everything ahead.", img:"https://source.unsplash.com/600x400/?dream" },
+    { title:"Forever", text:"Always you.", img:"https://source.unsplash.com/600x400/?romantic" },
+    { title:"Right now", text:"This moment is ours.", img:"https://source.unsplash.com/600x400/?together" }
 ];
+
+// BUILD PAGES
+function buildPages() {
+    const container = document.getElementById("pages");
+
+    pagesData.forEach((p, index) => {
+        const page = document.createElement("div");
+        page.className = "page";
+        page.style.zIndex = pagesData.length - index;
+
+        page.innerHTML = `
+            <h2>${p.title}</h2>
+            <img src="${p.img}">
+            <p>${p.text}</p>
+        `;
+
+        container.appendChild(page);
+    });
+}
 
 // OPEN BOOK
 function openBook() {
@@ -32,52 +51,46 @@ function openBook() {
 function checkPassword() {
     const pass = document.getElementById("password").value;
 
-    if (pass === "JoashManicum") {
+    if(pass === "JoashManicum") {
         document.getElementById("scrapbook").classList.add("active");
         document.getElementById("lock").style.display = "none";
-        renderPage();
+        buildPages();
     } else {
         alert("Wrong password");
     }
 }
 
-// RENDER PAGE
-function renderPage() {
-    const page = pages[currentPage];
-
-    document.getElementById("pageTitle").innerText =
-        `Page ${currentPage + 1} - ${page.title}`;
-
-    document.getElementById("pageText").innerText = page.text;
-    document.getElementById("pageImg").src = page.img;
-}
-
-// NEXT PAGE
+// FLIP FORWARD
 function nextPage() {
-    if (currentPage < pages.length - 1) {
+    const pages = document.querySelectorAll(".page");
+
+    if (currentPage < pages.length) {
+        pages[currentPage].classList.add("flipped");
         currentPage++;
-        renderPage();
-    } else {
-        closeBook();
+
+        // END OF BOOK → CLOSE BACK COVER
+        if (currentPage === pages.length) {
+            setTimeout(closeBook, 800);
+        }
     }
 }
 
-// PREV PAGE
+// FLIP BACKWARD
 function prevPage() {
+    const pages = document.querySelectorAll(".page");
+
     if (currentPage > 0) {
         currentPage--;
-        renderPage();
+        pages[currentPage].classList.remove("flipped");
     }
 }
 
-// CLOSE BOOK (BACK COVER EFFECT)
+// BACK COVER CLOSE (REAL END FEEL)
 function closeBook() {
-    alert("End of scrapbook 💚");
+    alert("Closing book... 💚");
 
     document.getElementById("book").classList.remove("open");
     document.getElementById("scrapbook").classList.remove("active");
 
-    // reset for next open
-    document.getElementById("lock").style.display = "flex";
-    document.getElementById("lock").classList.remove("show");
+    currentPage = 0;
 }
