@@ -2,278 +2,230 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Our Love Story</title>
-
+<title>Scrapbook Book</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;600&display=swap');
-
 body {
-    margin: 0;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #061b14;
-    font-family: 'Playfair Display', serif;
+  margin: 0;
+  background: #1a1a1a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: Arial, sans-serif;
 }
 
-/* BOOK */
+/* BOOK SHELL */
 .book {
-    width: 420px;
-    height: 560px;
-    position: relative;
-    perspective: 2500px;
+  width: 900px;
+  height: 600px;
+  position: relative;
+  perspective: 2000px;
 }
 
-/* FRONT COVER */
+/* COVER FRONT */
 .cover {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: #0b2b22;
-    color: #d6b36a;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
-    box-shadow: 0 25px 60px rgba(0,0,0,0.6);
-    transform-origin: left;
-    transition: transform 1.5s ease;
-    z-index: 10;
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  background: #0b3d2e; /* dark forest green */
+  left: 50%;
+  transform-origin: left;
+  transition: transform 1.2s ease;
+  z-index: 20;
+  border-radius: 10px 0 0 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
 }
 
-.cover h1 {
-    font-family: 'Great Vibes', cursive;
-    font-size: 42px;
+/* BACK COVER */
+.back-cover {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  background: #0b3d2e;
+  left: 0;
+  z-index: 1;
+  border-radius: 0 10px 10px 0;
 }
 
-.book.open .cover {
-    transform: rotateY(-160deg);
-}
-
-/* LOCK SCREEN */
+/* PASSWORD SCREEN */
 .lock-screen {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: #f5efe6;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: 0.8s;
-    z-index: 9;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.9);
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
 }
 
-.lock-screen.show {
-    opacity: 1;
-    pointer-events: all;
+.lock-screen input {
+  padding: 10px;
+  font-size: 18px;
+  margin-top: 10px;
 }
 
-/* SCRAPBOOK AREA */
-.scrapbook {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: #f5efe6;
-    opacity: 0;
-    pointer-events: none;
-    transition: 0.8s;
-    z-index: 1;
-}
-
-.scrapbook.active {
-    opacity: 1;
-    pointer-events: all;
-}
-
-/* PAGES STACK */
-.pages {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-}
-
-/* EACH PAGE */
+/* PAGES */
 .page {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: #f5efe6;
-    border-radius: 10px;
-    transform-origin: left;
-    transition: transform 1s ease;
-    backface-visibility: hidden;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-    padding: 20px;
-    box-sizing: border-box;
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  background: #f3e7c9;
+  transform-origin: left;
+  transition: transform 1s ease, z-index 0.2s;
+  left: 50%;
+  z-index: 5;
+  border-left: 2px solid #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* FLIP */
-.page.flipped {
-    transform: rotateY(-180deg);
+/* LEFT STACK (read pages) */
+.left-stack {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  left: 0;
+  background: #e9dbc0;
+  z-index: 2;
+  overflow: hidden;
 }
 
-/* CONTENT */
-.page img {
-    width: 100%;
-    height: 65%;
-    object-fit: cover;
-    border-radius: 10px;
-    margin-bottom: 10px;
+/* POLAROID */
+.polaroid {
+  width: 180px;
+  height: 220px;
+  background: white;
+  padding: 10px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
 }
 
-/* NAV */
-.nav {
-    position: absolute;
-    bottom: 15px;
-    width: 90%;
-    display: flex;
-    justify-content: space-between;
-    z-index: 20;
+.photo {
+  width: 100%;
+  height: 150px;
+  background: #ccc;
 }
 
-/* BUTTONS */
-button {
-    padding: 10px 18px;
-    border: none;
-    background: #0b2b22;
-    color: #d6b36a;
-    border-radius: 8px;
-    cursor: pointer;
+.caption {
+  font-size: 12px;
+  text-align: center;
+}
+
+/* OPEN STATE */
+.book.open .cover {
+  transform: rotateY(-180deg);
+}
+
+/* FLIPPED PAGE */
+.flipped {
+  transform: rotateY(-180deg);
+  z-index: 1;
 }
 </style>
 </head>
-
 <body>
 
 <div class="book" id="book">
 
-    <!-- COVER -->
-    <div class="cover">
-        <h1>Our Love Story</h1>
-        <p>A scrapbook of us ♥</p>
-        <button onclick="openBook()">Open Book</button>
-    </div>
+  <!-- PASSWORD SCREEN -->
+  <div class="lock-screen" id="lock">
+    <h2>Enter Password</h2>
+    <input type="password" id="password" placeholder="Password"/>
+    <button onclick="unlock()">Unlock</button>
+  </div>
 
-    <!-- PASSWORD -->
-    <div class="lock-screen" id="lock">
-        <h2>Enter Password</h2>
-        <input type="password" id="password" placeholder="Password">
-        <button onclick="checkPassword()">Unlock</button>
-    </div>
+  <!-- FRONT COVER -->
+  <div class="cover" onclick="openBook()">
+    📖 My Scrapbook
+  </div>
 
-    <!-- SCRAPBOOK -->
-    <div class="scrapbook" id="scrapbook">
+  <!-- BACK COVER -->
+  <div class="back-cover"></div>
 
-        <div class="pages" id="pages"></div>
+  <!-- LEFT STACK -->
+  <div class="left-stack" id="leftStack"></div>
 
-        <div class="nav">
-            <button onclick="prevPage()">⬅ Back</button>
-            <button onclick="nextPage()">Next ➡</button>
-        </div>
-
-    </div>
+  <!-- PAGES -->
+  <div id="pages"></div>
 
 </div>
 
 <script>
+const PASSWORD = "JoashManicum";
 let currentPage = 0;
+const totalPages = 15;
 
-const pagesData = [
-    { t:"How we started", d:"Our story began ❤️", i:"https://source.unsplash.com/600x400/?couple,love" },
-    { t:"First laughs", d:"We couldn’t stop laughing.", i:"https://source.unsplash.com/600x400/?laugh" },
-    { t:"Late nights", d:"Talking for hours.", i:"https://source.unsplash.com/600x400/?night" },
-    { t:"First memory", d:"I still remember this.", i:"https://source.unsplash.com/600x400/?memory" },
-    { t:"Small moments", d:"They meant everything.", i:"https://source.unsplash.com/600x400/?cozy" },
-    { t:"Road trips", d:"Music + us.", i:"https://source.unsplash.com/600x400/?roadtrip" },
-    { t:"Peace", d:"Just us being calm.", i:"https://source.unsplash.com/600x400/?calm" },
-    { t:"Your smile", d:"My favourite thing.", i:"https://source.unsplash.com/600x400/?smile" },
-    { t:"Growth", d:"We got stronger.", i:"https://source.unsplash.com/600x400/?growth" },
-    { t:"Hard days", d:"But we stayed.", i:"https://source.unsplash.com/600x400/?rain" },
-    { t:"Healing", d:"We learned love.", i:"https://source.unsplash.com/600x400/?sunlight" },
-    { t:"Deeper love", d:"It kept growing.", i:"https://source.unsplash.com/600x400/?heart" },
-    { t:"Dreams", d:"Everything ahead.", i:"https://source.unsplash.com/600x400/?dream" },
-    { t:"Forever", d:"Always you.", i:"https://source.unsplash.com/600x400/?romantic" },
-    { t:"Right now", d:"This moment is ours.", i:"https://source.unsplash.com/600x400/?together" }
-];
+const pagesContainer = document.getElementById("pages");
+const leftStack = document.getElementById("leftStack");
+const book = document.getElementById("book");
 
-function buildPages() {
-    const container = document.getElementById("pages");
-
-    pagesData.forEach((p, index) => {
-        const page = document.createElement("div");
-        page.className = "page";
-        page.style.zIndex = pagesData.length - index;
-
-        page.innerHTML = `
-            <h2>${p.t}</h2>
-            <img src="${p.i}">
-            <p>${p.d}</p>
-        `;
-
-        container.appendChild(page);
-    });
+function unlock() {
+  const input = document.getElementById("password").value;
+  if (input === PASSWORD) {
+    document.getElementById("lock").style.display = "none";
+  } else {
+    alert("Wrong password");
+  }
 }
 
-/* OPEN BOOK */
 function openBook() {
-    document.getElementById("book").classList.add("open");
+  book.classList.add("open");
 
+  // create pages dynamically
+  for (let i = 0; i < totalPages; i++) {
+    const page = document.createElement("div");
+    page.className = "page";
+    page.style.zIndex = totalPages - i;
+
+    page.innerHTML = `
+      <div class="polaroid">
+        <div class="photo"></div>
+        <div class="caption">Memory ${i + 1}</div>
+      </div>
+    `;
+
+    page.onclick = () => flipPage(page, i);
+    pagesContainer.appendChild(page);
+  }
+}
+
+function flipPage(page, index) {
+  if (index !== currentPage) return;
+
+  page.classList.add("flipped");
+
+  // move to left stack
+  setTimeout(() => {
+    const clone = page.cloneNode(true);
+    clone.classList.remove("flipped");
+    clone.style.transform = "none";
+    clone.style.position = "relative";
+    clone.style.margin = "10px";
+    leftStack.appendChild(clone);
+    page.style.display = "none";
+  }, 600);
+
+  currentPage++;
+
+  // if finished all pages, close book
+  if (currentPage === totalPages) {
     setTimeout(() => {
-        document.getElementById("lock").classList.add("show");
-    }, 1400);
-}
-
-/* PASSWORD */
-function checkPassword() {
-    const pass = document.getElementById("password").value;
-
-    if(pass === "JoashManicum") {
-        document.getElementById("scrapbook").classList.add("active");
-        document.getElementById("lock").style.display = "none";
-        buildPages();
-    } else {
-        alert("Wrong password");
-    }
-}
-
-/* NEXT PAGE */
-function nextPage() {
-    const pages = document.querySelectorAll(".page");
-
-    if(currentPage < pages.length) {
-        pages[currentPage].classList.add("flipped");
-        currentPage++;
-
-        if(currentPage === pages.length) {
-            setTimeout(closeBook, 800);
-        }
-    }
-}
-
-/* PREV PAGE */
-function prevPage() {
-    const pages = document.querySelectorAll(".page");
-
-    if(currentPage > 0) {
-        currentPage--;
-        pages[currentPage].classList.remove("flipped");
-    }
-}
-
-/* CLOSE BOOK (BACK COVER FEEL) */
-function closeBook() {
-    alert("Closing book 💚");
-
-    document.getElementById("book").classList.remove("open");
-    document.getElementById("scrapbook").classList.remove("active");
-
-    currentPage = 0;
+      book.classList.remove("open");
+      alert("You finished the scrapbook ❤️");
+    }, 1200);
+  }
 }
 </script>
 
