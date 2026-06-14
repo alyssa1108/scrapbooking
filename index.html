@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Green Scrapbook</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0b1f14;
+  color: #f5f1e6;
+  overflow-x: hidden;
+}
+
+/* ---------- BOOK COVER ---------- */
+#bookCover {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background: #0b1f14;
+}
+
+.book {
+  width: 320px;
+  height: 420px;
+  background: #123524;
+  border-radius: 12px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.book h1 {
+  font-size: 22px;
+}
+
+/* ---------- PASSWORD SCREEN ---------- */
+#passwordScreen {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loginBox {
+  background: #1a3d2a;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+input {
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  margin-top: 10px;
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: gold;
+  font-weight: bold;
+}
+
+/* ---------- SCRAPBOOK ---------- */
+#scrapbook {
+  padding: 30px;
+}
+
+.page {
+  background: #f5f1e6;
+  color: #1a1a1a;
+  padding: 30px;
+  border-radius: 12px;
+  min-height: 70vh;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+.page h2 {
+  margin-top: 0;
+}
+
+/* ---------- POLAROIDS ---------- */
+.polaroid {
+  background: white;
+  padding: 10px;
+  margin: 15px;
+  display: inline-block;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  width: 120px;
+  height: 120px;
+  text-align: center;
+}
+
+/* ---------- NAV ---------- */
+.nav {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.nav button {
+  margin: 5px;
+}
+
+/* ---------- HIDDEN ---------- */
+.hidden {
+  display: none;
+}
+
+/* ---------- GOLD SPARKLES ---------- */
+.sparkle {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: gold;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: sparkleAnim 600ms ease-out forwards;
+  z-index: 9999;
+}
+
+@keyframes sparkleAnim {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- BOOK COVER -->
+<div id="bookCover" onclick="openBook()">
+  <div class="book">
+    <h1>💚 Our Scrapbook 💚</h1>
+    <p>Tap to open</p>
+  </div>
+</div>
+
+<!-- PASSWORD -->
+<div id="passwordScreen" class="hidden">
+  <div class="loginBox">
+    <h2>Enter Password</h2>
+    <input type="password" id="passwordInput" placeholder="Password">
+    <br>
+    <button onclick="checkPassword()">Unlock</button>
+  </div>
+</div>
+
+<!-- SCRAPBOOK -->
+<div id="scrapbook" class="hidden">
+
+  <div class="page" id="page1">
+    <h2>Chapter 1 💌</h2>
+    <div class="polaroid">Memory 1</div>
+    <div class="polaroid">Memory 2</div>
+  </div>
+
+  <div class="page hidden" id="page2">
+    <h2>Chapter 2 💌</h2>
+    <div class="polaroid">Memory 3</div>
+    <div class="polaroid">Memory 4</div>
+  </div>
+
+  <div class="page hidden" id="page3">
+    <h2>Chapter 3 💌</h2>
+    <div class="polaroid">Memory 5</div>
+    <div class="polaroid">Memory 6</div>
+  </div>
+
+  <div class="page hidden" id="page4">
+    <h2>Chapter 4 💌</h2>
+    <div class="polaroid">Memory 7</div>
+    <div class="polaroid">Memory 8</div>
+  </div>
+
+  <div class="page hidden" id="page5">
+    <h2>Chapter 5 💌</h2>
+    <div class="polaroid">Memory 9</div>
+    <div class="polaroid">Memory 10</div>
+  </div>
+
+  <!-- NAV -->
+  <div class="nav">
+    <button onclick="prevPage()">⬅ Prev</button>
+    <button onclick="nextPage()">Next ➡</button>
+  </div>
+
+</div>
+
+<script>
+let currentPage = 1;
+const totalPages = 5;
+
+/* ---------- BOOK OPEN ---------- */
+function openBook() {
+  document.getElementById("bookCover").style.display = "none";
+  document.getElementById("passwordScreen").classList.remove("hidden");
+}
+
+/* ---------- PASSWORD CHECK ---------- */
+function checkPassword() {
+  let input = document.getElementById("passwordInput").value;
+
+  if (input === "JoashManicum") {
+    document.getElementById("passwordScreen").style.display = "none";
+    document.getElementById("scrapbook").classList.remove("hidden");
+  } else {
+    alert("Wrong password 💔");
+  }
+}
+
+/* ---------- PAGE SYSTEM ---------- */
+function showPage(page) {
+  for (let i = 1; i <= totalPages; i++) {
+    document.getElementById("page" + i).classList.add("hidden");
+  }
+  document.getElementById("page" + page).classList.remove("hidden");
+}
+
+function nextPage() {
+  if (currentPage < totalPages) {
+    currentPage++;
+    showPage(currentPage);
+  }
+}
+
+function prevPage() {
+  if (currentPage > 1) {
+    currentPage--;
+    showPage(currentPage);
+  }
+}
+
+/* ---------- GOLD SPARKLES ---------- */
+document.addEventListener("click", function (e) {
+  createSparkle(e.clientX, e.clientY);
+});
+
+function createSparkle(x, y) {
+  for (let i = 0; i < 6; i++) {
+    let sparkle = document.createElement("div");
+    sparkle.classList.add("sparkle");
+
+    let offsetX = (Math.random() - 0.5) * 40;
+    let offsetY = (Math.random() - 0.5) * 40;
+
+    sparkle.style.left = x + offsetX + "px";
+    sparkle.style.top = y + offsetY + "px";
+
+    document.body.appendChild(sparkle);
+
+    setTimeout(() => {
+      sparkle.remove();
+    }, 600);
+  }
+}
+</script>
+
+</body>
+</html>
+
+
+
