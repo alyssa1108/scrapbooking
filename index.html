@@ -5,206 +5,46 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Our Love Story</title>
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;600&display=swap');
-
-body {
-    margin: 0;
-    background: #061b14;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    font-family: 'Playfair Display', serif;
-}
-
-/* BOOK */
-.book {
-    width: 420px;
-    height: 560px;
-    position: relative;
-    perspective: 2000px;
-}
-
-/* COVER */
-.cover {
-    width: 100%;
-    height: 100%;
-    background: #0b2b22;
-    border-radius: 10px;
-    box-shadow: 0 25px 60px rgba(0,0,0,0.6);
-    position: absolute;
-    transform-origin: left;
-    transition: transform 1.5s ease, opacity 0.5s ease;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: #d6b36a;
-    text-align: center;
-    z-index: 3;
-}
-
-.cover h1 {
-    font-family: 'Great Vibes', cursive;
-    font-size: 40px;
-}
-
-.cover button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    border: none;
-    background: #d6b36a;
-    color: #0b2b22;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-/* OPEN ANIMATION */
-.book.open .cover {
-    transform: rotateY(-160deg);
-}
-
-/* PASSWORD SCREEN (hidden until cover opens) */
-.lock-screen {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: #f5efe6;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: 0.5s;
-    z-index: 2;
-}
-
-.book.open .lock-screen {
-    opacity: 1;
-    pointer-events: all;
-}
-
-input {
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #caa76a;
-    width: 70%;
-    text-align: center;
-}
-
-button {
-    margin-top: 15px;
-    padding: 10px 20px;
-    border: none;
-    background: #0b2b22;
-    color: #d6b36a;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-/* SCRAPBOOK */
-.scrapbook {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: #f5efe6;
-    opacity: 0;
-    pointer-events: none;
-    transition: 0.5s;
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-.scrapbook.active {
-    opacity: 1;
-    pointer-events: all;
-}
-
-.page {
-    display: flex;
-    gap: 15px;
-}
-
-.left, .right {
-    width: 50%;
-    background: white;
-    border-radius: 10px;
-    padding: 10px;
-}
-
-textarea {
-    width: 100%;
-    height: 80%;
-    border: none;
-    resize: none;
-    outline: none;
-    background: transparent;
-}
-
-/* NAV */
-.nav {
-    position: absolute;
-    bottom: 10px;
-    width: 90%;
-    display: flex;
-    justify-content: space-between;
-}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <div class="book" id="book">
 
-    <!-- COVER -->
+    <!-- FRONT COVER -->
     <div class="cover" id="cover">
         <h1>Our Love Story</h1>
         <p>A scrapbook of us ♥</p>
         <button onclick="openBook()">Open Book</button>
     </div>
 
-    <!-- PASSWORD (AFTER COVER OPENS) -->
-    <div class="lock-screen">
+    <!-- LOCK SCREEN -->
+    <div class="lock-screen" id="lock">
         <h2>Enter Password</h2>
-        <input type="password" id="pass" placeholder="Password"/>
-        <button onclick="checkPass()">Unlock</button>
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="checkPassword()">Unlock</button>
     </div>
 
     <!-- SCRAPBOOK -->
     <div class="scrapbook" id="scrapbook">
-        <h2>Chapter 1 - How we started</h2>
-        <div class="page">
-            <div class="left">
-                <textarea placeholder="Write your memory..."></textarea>
-            </div>
-            <div class="right">
-                <textarea placeholder="More memories..."></textarea>
-            </div>
+
+        <h2 id="pageTitle"></h2>
+
+        <div class="page-content">
+            <img id="pageImg" class="page-img" />
+            <p id="pageText"></p>
         </div>
+
+        <div class="nav">
+            <button onclick="prevPage()">⬅ Prev</button>
+            <button onclick="nextPage()">Next ➡</button>
+        </div>
+
     </div>
 
 </div>
 
-<script>
-
-function openBook() {
-    document.getElementById("book").classList.add("open");
-}
-
-function checkPass() {
-    const pass = document.getElementById("pass").value;
-
-    if(pass === "JoashManicum") {
-        document.getElementById("scrapbook").classList.add("active");
-        document.querySelector(".lock-screen").style.display = "none";
-    } else {
-        alert("Wrong password");
-    }
-}
-
-</script>
-
+<script src="script.js"></script>
 </body>
 </html>
